@@ -88,4 +88,8 @@ public final class PrefUtils {
         editor.apply();
     }
 
+    public static boolean isValidStock() {
+        return false;
+    }
+
 }

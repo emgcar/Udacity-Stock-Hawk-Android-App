@@ -3,6 +3,7 @@ package com.udacity.stockhawk.ui;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,10 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     private Cursor cursor;
     private StockAdapterOnClickHandler clickHandler;
 
+    private final int VALID_STOCK = 0;
+    private final int INVALID_STOCK = 1;
+    private final int UNKNOWN_STOCK = 2;
+
     StockAdapter(Context context, StockAdapterOnClickHandler clickHandler) {
         this.context = context;
         this.clickHandler = clickHandler;
@@ -53,12 +58,42 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         return cursor.getString(Contract.Quote.POSITION_SYMBOL);
     }
 
+    int getValidityAtPosition(int position) {
+        cursor.moveToPosition(position);
+        return cursor.getInt(Contract.Quote.POSITION_VALID);
+    }
+
     @Override
     public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View item;
 
-        View item = LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false);
+        switch (viewType) {
+            case INVALID_STOCK:
+                item = LayoutInflater.from(context).inflate(R.layout.list_item_invalid, parent, false);
+                break;
+            case VALID_STOCK:
+                item = LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false);
+                break;
+            default:
+                item = LayoutInflater.from(context).inflate(R.layout.list_item_unknown, parent, false);
+                break;
+        }
 
         return new StockViewHolder(item);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int validity = getValidityAtPosition(position);
+
+        switch (validity) {
+            case Contract.Quote.ENTRY_VALID:
+                return VALID_STOCK;
+            case Contract.Quote.ENTRY_INVALID:
+                return INVALID_STOCK;
+            default:
+                return UNKNOWN_STOCK;
+        }
     }
 
     @Override
@@ -66,10 +101,20 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
         cursor.moveToPosition(position);
 
-
         holder.symbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
-        holder.price.setText(dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
 
+        int validity = getValidityAtPosition(position);
+
+        switch (validity) {
+            case Contract.Quote.ENTRY_INVALID:
+                holder.invalid.setText(R.string.invalid);
+                return;
+            case Contract.Quote.ENTRY_VALIDITY_UNKNOWN:
+                holder.verify.setText(R.string.verifying);
+                return;
+        }
+
+        holder.price.setText(dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
 
         float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
         float percentageChange = cursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
@@ -112,11 +157,21 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         @BindView(R.id.symbol)
         TextView symbol;
 
+        @Nullable
         @BindView(R.id.price)
         TextView price;
 
+        @Nullable
         @BindView(R.id.change)
         TextView change;
+
+        @Nullable
+        @BindView(R.id.invalid)
+        TextView invalid;
+
+        @Nullable
+        @BindView(R.id.verify)
+        TextView verify;
 
         StockViewHolder(View itemView) {
             super(itemView);

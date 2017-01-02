@@ -32,4 +32,14 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
+    <string name="toast_invalid_input">Symbol %s is not considered a valid stock symbol. Please check for typing errors.</string>
+    <string name="invalid">INVALID</string>
+    <string name="verifying">VERIFYING...</string>
+
+    <string name="invalid_history" translatable="false">invalid</string>
+
+    <string name="empty_stock_list">No stocks are currently saved! To begin, please click on the
+        blue circle in the bottom right corner of the app!</string>
+
+    <string name="error_out_of_date">These stocks may be out of date! Please check your network connection!</string>
 </resources>
