@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
@@ -104,6 +105,7 @@ public final class QuoteSyncJob {
 
 
                     quoteCV.put(Contract.Quote.COLUMN_HISTORY, historyBuilder.toString());
+                    Log.d("Finding history", historyBuilder.toString());
 
                     quoteCVs.add(quoteCV);
                 } else {

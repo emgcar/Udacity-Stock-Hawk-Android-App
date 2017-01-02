@@ -1,14 +1,24 @@
 package com.udacity.stockhawk.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
+import com.jjoe64.graphview.series.DataPoint;
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import yahoofinance.histquotes.HistoricalQuote;
 
 public final class PrefUtils {
 
@@ -88,8 +98,54 @@ public final class PrefUtils {
         editor.apply();
     }
 
-    public static boolean isValidStock() {
-        return false;
+    public static String[] getStockHistory(Context context, String symbol) {
+        String history;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        try {
+            String query = "SELECT * FROM " + Contract.Quote.TABLE_NAME
+                    + " WHERE " + Contract.Quote.COLUMN_SYMBOL + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{symbol});
+
+            cursor.moveToFirst();
+
+            history = getStringFromCursor(cursor, Contract.Quote.COLUMN_HISTORY);
+        } finally {
+            db.close();
+        }
+
+        return stringToList(history);
+    }
+
+    public static String[] stringToList(String history) {
+        return history.split("[\n,]");
+    }
+
+    public static DataPoint[] historyToDataPoints(String[] history) {
+        Calendar from = Calendar.getInstance();
+
+        int length = history.length / 2;
+        int historyPos = 0;
+
+        DataPoint[] data = new DataPoint[length];
+
+        for (int i = 0; i < length; i++) {
+            historyPos++;
+            float x = (float) i;
+            float y = new Float(history[historyPos++]).floatValue();
+
+            DataPoint point = new DataPoint(x, y);
+            data[i] = point;
+        }
+
+        return data;
+    }
+
+    public static String getStringFromCursor(Cursor cursor, String columnName) {
+        int index = cursor.getColumnIndex(columnName);
+        return cursor.getString(index);
     }
 
 }
