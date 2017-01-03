@@ -148,4 +148,33 @@ public final class PrefUtils {
         return cursor.getString(index);
     }
 
+    public static int getIntFromCursor(Cursor cursor, String columnName) {
+        int index = cursor.getColumnIndex(columnName);
+        return cursor.getInt(index);
+    }
+
+    public static boolean isValid(Context context, String symbol) {
+        boolean valid = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        try {
+            String query = "SELECT * FROM " + Contract.Quote.TABLE_NAME
+                    + " WHERE " + Contract.Quote.COLUMN_SYMBOL + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{symbol});
+
+            cursor.moveToFirst();
+
+            int validity = getIntFromCursor(cursor, Contract.Quote.COLUMN_VALID);
+
+            if (validity == Contract.Quote.ENTRY_VALID) {
+                valid = true;
+            }
+        } finally {
+            db.close();
+        }
+
+        return valid;
+    }
 }

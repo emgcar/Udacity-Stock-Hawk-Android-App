@@ -1,7 +1,6 @@
 
 
 TODO:
-- Gundega (widgets)
 
 
 
@@ -12,6 +11,7 @@ FINISHED:
 - Your Boss (translations)
 - Adebowale (more info)
 - Hellen (accessibility)
+- Gundega (widgets)
 
 
 

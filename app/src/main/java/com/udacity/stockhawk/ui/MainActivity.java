@@ -54,9 +54,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onClick(String symbol) {
         Timber.d("Symbol clicked: %s", symbol);
 
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(getString(R.string.symbol_key), symbol);
-        startActivity(intent);
+        if (PrefUtils.isValid(this, symbol)) {
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(getString(R.string.symbol_key), symbol);
+            startActivity(intent);
+        } else {
+            String message = getString(R.string.toast_invalid_input, symbol);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

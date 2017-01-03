@@ -86,12 +86,17 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                         data == null || !data.moveToPosition(position)) {
                     return null;
                 }
-                RemoteViews views = new RemoteViews(getPackageName(),
-                        R.layout.widget_detail_list_item);
 
                 Context context = DetailWidgetRemoteViewsService.this;
 
                 String symbol = data.getString(INDEX_STOCK_SYMBOL);
+                if (!PrefUtils.isValid(context, symbol)) {
+                    return null;
+                }
+
+                RemoteViews views = new RemoteViews(getPackageName(),
+                        R.layout.widget_detail_list_item);
+
                 views.setTextViewText(R.id.symbol, symbol);
 
                 String price = data.getString(INDEX_STOCK_PRICE);
@@ -109,6 +114,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                 final Intent fillInIntent = new Intent();
                 Uri weatherUri = Contract.Quote.URI;
                 fillInIntent.setData(weatherUri);
+                fillInIntent.putExtra(getString(R.string.symbol_key), symbol);
                 views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
                 return views;
             }
