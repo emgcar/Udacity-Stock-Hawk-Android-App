@@ -65,4 +65,14 @@
     <string name="a11y_price" translatable="true">Price: <xliff:g id="price">%1$s</xliff:g></string>
     <string name="a11y_price_dollar_change" translatable="true">Price changed by <xliff:g id="dollar_change">%1$s</xliff:g> dollars</string>
     <string name="a11y_price_percent_change" translatable="true">Price changed by <xliff:g id="percent_change">%1$s</xliff:g> percent</string>
+
+    <!-- Strings related to Widgets -->
+    <string name="title_widget_detail" translatable="true">StockHawk Details</string>
+
+    <dimen name="widget_detail_default_width">250dp</dimen>
+    <dimen name="widget_detail_default_height">180dp</dimen>
+    <dimen name="widget_detail_min_resize_width">220dp</dimen>
+    <dimen name="widget_detail_min_resize_height">@dimen/widget_detail_default_height</dimen>
+    <dimen name="forecast_widget_text_size">24dp</dimen>
+    <dimen name="forecast_widget_text_width">38dp</dimen>
 </resources>
