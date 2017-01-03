@@ -31,7 +31,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     GraphView graph;
     TextView stockLabel;
     TextView attributeLabel;
-    ImageView attributeImage;
 
     static final String DETAIL_URI = "URI";
     String symbol;
@@ -55,9 +54,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         graph = (GraphView) rootView.findViewById(R.id.history_graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         graph.addSeries(series);
+        graph.setContentDescription(getContext().getString(R.string.a11y_stock_label, symbol));
 
         stockLabel = (TextView) rootView.findViewById(R.id.symbol);
         stockLabel.setText(symbol);
+        stockLabel.setContentDescription(getContext().getString(R.string.a11y_stock_label, symbol));
 
         attributeLabel = (TextView) rootView.findViewById(R.id.attribute_label);
         attributeLabel.setText(getString(R.string.graph_view_attribution));

@@ -36,6 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/a11y_attribution_text"
             android:text="@string/graph_view_attribution"
             android:id="@+id/attribute_label"/>
 
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:scaleX="0.5"
             android:scaleY="0.5"
+            android:contentDescription="@string/a11y_attribution_image"
             android:src="@drawable/logo_graphview"
             android:id="@+id/attribute_image"/>
 

@@ -1,7 +1,6 @@
 
 
 TODO:
-- Hellen (accessibility)
 - Gundega (widgets)
 
 
@@ -12,6 +11,7 @@ FINISHED:
 - Xaio-lu (error messages)
 - Your Boss (translations)
 - Adebowale (more info)
+- Hellen (accessibility)
 
 
 

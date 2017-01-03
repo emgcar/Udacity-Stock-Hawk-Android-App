@@ -110,16 +110,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (!networkUp() && adapter.getItemCount() == 0) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_network));
+            error.setContentDescription(getString(R.string.error_no_network));
             error.setVisibility(View.VISIBLE);
         } else if (!networkUp()) {
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_out_of_date));
+            error.setContentDescription(getString(R.string.error_out_of_date));
             error.setVisibility(View.VISIBLE);
             Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
         } else if (PrefUtils.getStocks(this).size() == 0) {
             Timber.d("WHYAREWEHERE");
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_stocks));
+            error.setContentDescription(getString(R.string.error_no_stocks));
             error.setVisibility(View.VISIBLE);
         } else {
             error.setVisibility(View.GONE);
@@ -175,8 +178,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (PrefUtils.getDisplayMode(this)
                 .equals(getString(R.string.pref_display_mode_absolute_key))) {
             item.setIcon(R.drawable.ic_percentage);
+            item.getActionView().setContentDescription(getString(R.string.a11y_pertentage_icon));
         } else {
             item.setIcon(R.drawable.ic_dollar);
+            item.getActionView().setContentDescription(getString(R.string.a11y_dollar_icon));
         }
     }
 

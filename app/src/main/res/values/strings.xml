@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name" translatable="true">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
@@ -50,4 +50,19 @@
     <string name="history_key" translatable="false">history</string>
     <string name="symbol_key" translatable="false">symbol</string>
     <string name="graph_view_attribution" translatable="true">Graph brought to you by: </string>
+
+    <!-- A11y -->
+    <string name="a11y_add_stock_button" translatable="true">Button to add stock to list</string>
+    <string name="a11y_input_field" translatable="true">Edit text field to enter new stock</string>
+    <string name="a11y_attribution_text" translatable="true">This graph brought to you by GraphView</string>
+    <string name="a11y_attribution_image" translatable="true">GraphView icon</string>
+    <string name="a11y_stock_label" translatable="true">Stock: <xliff:g id="stock">%1$s</xliff:g></string>
+    <string name="a11y_history_graph" translatable="true">History Graph of: <xliff:g id="stock">%1$s</xliff:g></string>
+    <string name="a11y_pertentage_icon" translatable="true">Information in Percentages</string>
+    <string name="a11y_dollar_icon" translatable="true">Information in Dollars</string>
+    <string name="a11y_invalid_stock" translatable="true"><xliff:g id="stock">%1$s</xliff:g> is Invalid</string>
+    <string name="a11y_verifying_stock" translatable="true">Verifying <xliff:g id="stock">%1$s</xliff:g></string>
+    <string name="a11y_price" translatable="true">Price: <xliff:g id="price">%1$s</xliff:g></string>
+    <string name="a11y_price_dollar_change" translatable="true">Price changed by <xliff:g id="dollar_change">%1$s</xliff:g> dollars</string>
+    <string name="a11y_price_percent_change" translatable="true">Price changed by <xliff:g id="percent_change">%1$s</xliff:g> percent</string>
 </resources>
